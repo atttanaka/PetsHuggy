@@ -3,14 +3,16 @@
 @import "toastr";
 @import "dropzone/dropzone";
 
+
+
 .jumbotron {
     padding-top: 0px;
     // 背景画像を暗くする
     background: linear-gradient( rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.05) ), url(person-845325_1920.jpg);
-	background-size: cover;
-	// 背景画像の位置を決める
-	background-position: 50% 50%;
-	height: 420px;
+  background-size: cover;
+  // 背景画像の位置を決める
+  background-position: 50% 50%;
+  height: 420px;
 }
 
 .jumbotron .container .row{
@@ -304,7 +306,7 @@ span.listing-title {
     position: inherit;
     width: 296px;
     z-index: 100;
-    margin-top: -192px;
+    margin-top: -62px;
   }
 }
 

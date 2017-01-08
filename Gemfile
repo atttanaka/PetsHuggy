@@ -18,16 +18,16 @@ gem 'dropzonejs-rails'
 gem "figaro", "~> 1.1.0"
 gem 'aws-sdk', '~> 2.3'
 gem 'geocoder'
+gem 'jquery-ui-rails'
+gem 'stripe'
 
 
-
-
-group :production do 
+group :production do
 	gem 'pg'
 	gem 'rails_12factor'
 end
 
-group :development, :test do 
+group :development, :test do
 	gem 'sqlite3'
 end
 

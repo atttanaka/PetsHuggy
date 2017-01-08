@@ -1,4 +1,4 @@
-<%= render 'partial/navbar' %>
+ <%= render 'partial/navbar' %>
 <div class="container">
     <div class="col-md-3">
         <!-- vertical-navbar -->
@@ -12,7 +12,7 @@
                 </div>
             </div>
 
-            <div class="panel-body">            
+            <div class="panel-body">
 
                 <%= form_for @listing do |f| %>
 
@@ -30,10 +30,10 @@
                             <div class="form-group">
                                 <label>内容</label>
                                 <%= f.text_area :listing_content, rows: 8, placeholder: "リスティングの内容について記述してください", class: "form-control" %>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
-            
+
 
                     <div class="actions">
                         <%= f.submit "更新", class: "btn btn-danger" %>

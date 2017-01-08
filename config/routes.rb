@@ -1,4 +1,4 @@
-Rails.application.routes.draw do  
+Rails.application.routes.draw do
   resources :listings
 
   root :to => 'pages#index'
@@ -9,9 +9,18 @@ Rails.application.routes.draw do
 
   resources :photos, only: [:create, :destroy] do
     collection do
-      get :list 
+      get :list
     end
   end
+
+  resources :listings do
+    resources :reservations, only: [:new, :create]
+  end
+
+  get '/setdate' => 'reservations#setdate'
+  get '/duplicate' => 'reservations#duplicate'
+  get '/reservations' => 'reservations#index'
+  get '/reserved' => 'reservations#reserved'
 
   get 'manage-listing/:id/basics' => 'listings#basics', as: 'manage_listing_basics'
   get 'manage-listing/:id/description' => 'listings#description', as: 'manage_listing_description'
@@ -21,5 +30,10 @@ Rails.application.routes.draw do
   get 'manage-listing/:id/calendar' => 'listings#calendar', as: 'manage_listing_calendar'
   get 'manage-listing/:id/bankaccount' => 'listings#bankaccount', as: 'manage_listing_bankaccount'
   get 'manage-listing/:id/publish' => 'listings#publish', as: 'manage_listing_publish'
+
+  get 'connect/oauth' => 'stripe#oauth', as: 'stripe_oauth'
+  get 'connect/confirm' => 'stripe#confirm', as: 'stripe_confirm'
+  get 'connect/deauthorize' => 'stripe#deauthorize', as: 'stripe_deauthorize'
+
 end
 

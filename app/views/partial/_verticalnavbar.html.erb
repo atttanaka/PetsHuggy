@@ -7,33 +7,95 @@
     </div>
     <div class="navbar-collapse collapse sidebar-navbar-collapse">
       <ul class="nav navbar-nav">
-        <li class="<%= 'active' if controller?("listings") && action?("basics") %>">
+        <li class="<%= 'active' if controller?("listings") && action?("basics") %>" id = "nav-basics">
           <%= link_to "基本事項", manage_listing_basics_path(@listing) %>
         </li>
 
-        <li class="<%= 'active' if controller?("listings") && action?("description") %>">
+        <li class="<%= 'active' if controller?("listings") && action?("description") %> listing-checked" id = "nav-description">
           <%= link_to "リスティングの内容", manage_listing_description_path(@listing) %>
         </li>
 
-        <li class="<%= 'active' if controller?("listings") && action?("address") %>">
+        <li class="<%= 'active' if controller?("listings") && action?("address") %>" id = "nav-address">
           <%= link_to "住所情報", manage_listing_address_path(@listing) %>
         </li>
-        <li class="<%= 'active' if controller?("listings") && action?("price") %>">
+        <li class="<%= 'active' if controller?("listings") && action?("price") %>" id = "nav-price">
           <%= link_to "料金", manage_listing_price_path(@listing) %>
         </li>
-        <li class="<%= 'active' if controller?("listings") && action?("photos") %>">
+        <li class="<%= 'active' if controller?("listings") && action?("photos") %>" id = "nav-photos">
           <%= link_to "写真", manage_listing_photos_path(@listing),data:{no_turbolink: true} %>
         </li>
         <li class="<%= 'active' if controller?("listings") && action?("calendar") %>">
           <%= link_to "カレンダー", manage_listing_calendar_path(@listing) %>
         </li>
-        <li class="<%= 'active' if controller?("listings") && action?("bankaccount") %>">
+        <li class="<%= 'active' if controller?("listings") && action?("bankaccount") %>" id = "nav-bankaccount">
           <%= link_to "受取口座情報", manage_listing_bankaccount_path(@listing) %>
         </li>
-        <li class="<%= 'active' if controller?("listings") && action?("publish") %>">
+        <li class="<%= 'active' if controller?("listings") && action?("publish") %>" id = "nav-publish">
           <%= link_to "公開する", manage_listing_publish_path(@listing) %>
         </li>
       </ul>
     </div><!--/.nav-collapse -->
   </div>
 </div>
+
+<script>
+$(function(){
+
+  // a
+  var notchecked = 5;
+
+  // a
+  <% if !@listing.listing_title.blank? && !@listing.listing_content.blank? %>
+    $('#nav-description').attr('class', 'listing-checked');
+    notchecked--;
+  <% else %>
+    $('#nav-description').attr('class', 'listing-notchecked');
+  <% end %>
+
+  <% if !@listing.address.blank? && !@listing.listing_content.blank? %>
+    $('#nav-address').attr('class', 'listing-checked');
+    notchecked--;
+  <% else %>
+    $('#nav-address').attr('class', 'listing-notchecked');
+  <% end %>
+
+  <% if !@listing.photos.blank? && !@listing.listing_content.blank? %>
+    $('#nav-photos').attr('class', 'listing-checked');
+    notchecked--;
+  <% else %>
+    $('#nav-photos').attr('class', 'listing-notchecked');
+  <% end %>
+
+  <% if !@listing.price_pernight.blank? && !@listing.listing_content.blank? %>
+    $('#nav-price').attr('class', 'listing-checked');
+    notchecked--;
+  <% else %>
+    $('#nav-price').attr('class', 'listing-notchecked');
+  <% end %>
+
+  <% if !@listing.user.stripe_user_id.blank? && !@listing.listing_content.blank? %>
+    $('#nav-bankaccount').attr('class', 'listing-checked');
+    notchecked--;
+  <% else %>
+    $('#nav-bankaccount').attr('class', 'listing-notchecked');
+  <% end %>
+
+
+// a
+  if(notchecked > 0 ){
+    $("li#nav-publish a").text("残り"+ notchecked +"ステップ");
+    $("li#nav-publish a").removeAttr("href");
+  }else{
+    $("li#nav-publish a").text("公開する");
+  }
+
+  // a
+  $.ajax({
+    // a
+    url: '/not_checked',
+    // a
+    data: {'listing_id': <%= @listing.id %>,'not_checked': notchecked},
+    dataType: 'json'
+  });
+});
+</script>

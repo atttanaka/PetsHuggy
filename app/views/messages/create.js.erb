@@ -1,0 +1,8 @@
+// a
+
+<% publish_to conversation_messages_path(@conversation) do %>
+  $('#chat').prepend("<%= j(render @message)%>");
+<% end %>
+
+// a
+$('#new_message')[0].reset();

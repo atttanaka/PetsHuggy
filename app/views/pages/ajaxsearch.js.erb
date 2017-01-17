@@ -1,0 +1,37 @@
+$('#searh-result').html("<%= j render 'pages/list' %>");
+<% @arrlistings.each do |listing| %>
+  // marker
+    var marker = new google.maps.Marker({
+      position: new google.maps.LatLng(<%= listing.latitude %>, <%= listing.longitude %>),
+      map: map
+    });
+
+// marker save
+  markers.push(marker);
+
+  // click shori
+  marker.addListener('click', function() {
+
+    <% if !listing.photos.blank? %>
+      var content = "<div>" + '<a href="/listings/' + <%= listing.id %> +'">' + "<img src="+"<%= listing.photos[0].image.url(:thumb) %>" + " " + "style='width: 100%;height: 150px;'" +"alt='139'>" + "</a>" + '<br>' + "<h5><%= listing.listing_title %></h5>" + "<div class="+"col-md-12"+">"+"<h4>Reviews <span class="+"average_rating_listing"+"></span>"+"(<%= listing.reviews.count %>)"+"</h4></div>";
+    <% end %>
+
+    // InfoWindow
+    var infowindow = new google.maps.InfoWindow({
+      content: content,
+      maxWidth: 280
+    });
+
+    infowindow.open(map, this);
+    infowindows.push(infowindow);
+
+    // after load InfoWindow
+    google.maps.event.addListener(infowindow, 'domready', function() {
+      $('.average_rating_listing').raty({
+        path: '/assets',
+        readOnly: true,
+        score: <%= listing.average_star_rate %>
+      });
+    });
+  });
+<% end %>
